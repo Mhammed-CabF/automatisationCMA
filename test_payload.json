@@ -1,0 +1,15 @@
+{
+    "deal_id": "TEST001",
+    "nom": "sndsj",
+    "prenom": "sjdhsjh",
+    "date_naissance": "1990-05-03",
+    "lieu_naissance": "Lyon",
+    "pays_naissance": "France",
+    "adresse": "10 rue de Paris",
+    "code_post": "75000",
+    "ville": "Paris",
+    "email": "mohammed@cab-formations.fr",
+    "phone": "0612345678",
+    "password": "Abcdef12!"
+  }
+  
