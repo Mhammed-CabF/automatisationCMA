@@ -16,7 +16,13 @@ async def create_cma_account(data: dict, debug: bool = False) -> dict:
     launch_args = {"headless": not debug, "args": ["--no-sandbox"]}
 
     async with async_playwright() as p:
-        browser = await p.chromium.launch(**launch_args)
+
+        browser = await p.chromium.launch(
+    headless=True,
+    executable_path="/opt/render/.cache/ms-playwright/chromium_headless_shell-1187/chrome-linux/headless_shell",
+    args=["--no-sandbox", "--disable-setuid-sandbox"]
+)
+        #browser = await p.chromium.launch(**launch_args)
         context = await browser.new_context()
         page = await context.new_page()
 
