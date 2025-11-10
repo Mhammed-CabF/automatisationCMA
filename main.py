@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 from fastapi import FastAPI, Request
 from playwright.async_api import async_playwright
+from fastapi import BackgroundTasks
 
 CMA_URL = "https://www.exament3p.fr"
 
@@ -96,10 +97,21 @@ def root():
     return {"message": "✅ CMA automation API is running on Render"}
 
 
+#@app.post("/zoho/webhook")
+#async def webhook(request: Request):
+#    """Reçoit les données du workflow Zoho CRM"""
+#    data = await request.json()
+#    print("📦 Données reçues :", data)
+ #   result = await create_cma_account(data, debug=False)
+ #   return result
+
 @app.post("/zoho/webhook")
-async def webhook(request: Request):
-    """Reçoit les données du workflow Zoho CRM"""
+async def webhook(request: Request, background_tasks: BackgroundTasks):
     data = await request.json()
     print("📦 Données reçues :", data)
-    result = await create_cma_account(data, debug=False)
-    return result
+
+    # Lancer Playwright en arrière-plan
+    background_tasks.add_task(create_cma_account, data, False)
+
+    # Répondre tout de suite à Zoho
+    return {"status": "queued", "message": "Automatisation CMA en cours"}
